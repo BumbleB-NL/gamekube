@@ -10,6 +10,8 @@ Enterprise grade gameserver deployment on self hosted Kubernetes
 The project consists of multiple components:
 - MetalLB loadbalancer for providing access to the services.
 - NFS CSI provisioner for dynamically creating PV's on a NFS server when they are needed.
+- Deployments for multiple gameservers including factorio and minecraft servers.
+- Options for configuring installations using configmaps and secretmaps.
 
 ![Functional](Designs/GameKubeFunctionalDesignV2.drawio.png)
 
