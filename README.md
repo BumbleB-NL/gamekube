@@ -8,9 +8,9 @@ Preconfigured NFS server that can be accessed by the cluster.
 # Components
 The project consists of multiple components as shown in the diagrams below.
 
-[Functional](Designs\GameKubeFunctionalDesignV2.drawio.png)
+![Functional](Designs\GameKubeFunctionalDesignV2.drawio.png)
 
 Network design:
-[Network](Designs\GameKubeNetworkV2.drawio.png)
+![Network](Designs\GameKubeNetworkV2.drawio.png)
 
 # Installation
