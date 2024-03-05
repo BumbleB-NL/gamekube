@@ -20,3 +20,9 @@ Network design:
 ![Network](Designs/GameKubeNetworkV2.drawio.png)
 
 # Installation
+
+# TODO
+-[ ] Userfriendly portal
+-[ ] Container/pod isolation
+-[ ] Deploy multiple of the same server within a users namespace without manually changing deployments.
+-[ ] Configureable options like CPU, memory, and storage for users.
