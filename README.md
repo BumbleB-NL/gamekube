@@ -7,7 +7,9 @@ Enterprise grade gameserver deployment on self hosted Kubernetes
 - Preconfigured NFS server that can be accessed by the cluster.
 
 # Components
-The project consists of multiple components as shown in the diagrams below.
+The project consists of multiple components:
+- MetalLB loadbalancer for providing access to the services.
+- NFS CSI provisioner for dynamically creating PV's on a NFS server when they are needed.
 
 ![Functional](Designs/GameKubeFunctionalDesignV2.drawio.png)
 
