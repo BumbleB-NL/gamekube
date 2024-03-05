@@ -26,7 +26,7 @@ Required to dynamically provision each pod with a Persistant Volume. Repo [here]
 To install start by adding the repo to helm:
 `helm repo add csi-driver-nfs https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts`
 
-Next install the driver, (important, when using nodes that have both the `control-plane` and the `etcd` taint do __not__ use `--set controller.runOnControlPlane=true`.
+Next install the driver, (important, when using nodes that have both the `control-plane` and the `etcd` taint do ___not___ use `--set controller.runOnControlPlane=true`.
 `helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs --namespace kube-system --version v4.6.0`
 
 
