@@ -1,0 +1,38 @@
+allowVolumeExpansion: false
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    field.cattle.io/description: nfs-storage-retain
+  creationTimestamp: '2024-03-01T14:13:56Z'
+  managedFields:
+    - apiVersion: storage.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:allowVolumeExpansion: {}
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:field.cattle.io/description: {}
+        f:mountOptions: {}
+        f:parameters:
+          .: {}
+          f:server: {}
+          f:share: {}
+        f:provisioner: {}
+        f:reclaimPolicy: {}
+        f:volumeBindingMode: {}
+      manager: agent
+      operation: Update
+      time: '2024-03-01T14:13:56Z'
+  name: nfs-storage-retain
+  resourceVersion: '26779'
+  uid: c6fd622e-b96e-48e6-b38d-be8392886e19
+mountOptions:
+  - nfsvers=4.1
+parameters:
+  server: 10.200.0.9
+  share: /mnt/P1-K1-Pool01
+provisioner: nfs.csi.k8s.io
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
