@@ -11,6 +11,7 @@ The project consists of multiple components as shown in the diagrams below.
 ![Functional](Designs/GameKubeFunctionalDesignV2.drawio.png)
 
 Network design:
+
 ![Network](Designs/GameKubeNetworkV2.drawio.png)
 
 # Installation
