@@ -31,7 +31,10 @@ Next install the driver, (important, when using nodes that have both the `contro
 
 `helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs --namespace kube-system --version v4.6.0`
 
+Create a storage class, choose to either retain the volume or delete it after it gets released:
 
+` kubectl create -f .\KubeCore\nfs-csi-driver\nfs-storage-retain.yaml` (retain).
+` kubectl create -f .\KubeCore\nfs-csi-driver\nfs-storage.yaml` (delete).
 
 # ToDo
 
