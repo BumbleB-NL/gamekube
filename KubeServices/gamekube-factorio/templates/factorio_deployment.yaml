@@ -18,6 +18,13 @@ spec:
           ports:
             - containerPort: 34197
               protocol: UDP
+          resources:
+            limits:
+              cpu: {{ .Values.cpu_limit }}
+              memory: {{ .Values.memory_limit }}
+            requests: 
+              cpu: {{ .Values.cpu_requests }}
+              memory: {{ .Values.memory_requests }}
           volumeMounts:
             - mountPath: "/factorio"
               name: factorio-volume

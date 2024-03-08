@@ -1,0 +1,5 @@
+cpu_limit: 2
+cpu_requests: 1
+memory_limit: 2Gi
+memory_requests: 1Gi
+storage_size: 2Gi

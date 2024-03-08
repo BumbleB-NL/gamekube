@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: vulnerables/web-dvwa
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.cpu_limit }}
+              memory: {{ .Values.memory_limit }}
+            requests: 
+              cpu: {{ .Values.cpu_requests }}
+              memory: {{ .Values.memory_requests }}

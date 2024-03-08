@@ -1,6 +1,6 @@
 apiVersion: v2
-name: gamekube-minecraft
-description: minecraft for gamekube
+name: gamekube-factorio
+description: Factorio chart for gamekube deployment
 
 # A chart can be either an 'application' or a 'library' chart.
 #
