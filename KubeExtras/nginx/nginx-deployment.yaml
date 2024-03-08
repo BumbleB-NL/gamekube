@@ -23,29 +23,4 @@ spec:
       volumes:
         - name: nginx-volume
           persistentVolumeClaim:
-            claimName: pvc-nfs-dynamic
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvc-nfs-dynamic
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: nfs-storage-retain
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
+            claimName: nginx-pvc

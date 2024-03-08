@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: factoriotools/factorio
+          ports:
+            - containerPort: 34197
+              protocol: UDP
+          volumeMounts:
+            - mountPath: "/factorio"
+              name: factorio-volume
+      volumes:
+        - name: factorio-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
