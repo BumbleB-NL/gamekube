@@ -14,7 +14,7 @@ The project consists of multiple components:
 - Deployments for multiple gameservers including factorio and minecraft servers.
 - Options for configuring installations using configmaps and secretmaps.
 
-![Functional](Designs/GameKubeFunctionalDesignV2.drawio.png)
+![Functional](Designs/GameKubeFunctionalDesignV3.drawio.png)
 
 Network design:
 
