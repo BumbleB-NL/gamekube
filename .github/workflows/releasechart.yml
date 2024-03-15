@@ -30,7 +30,7 @@ jobs:
             echo "Tarring directory: $dir"
             base=$(basename "$dir")
             echo "Base directory: $base"
-            tar -czf "KubeServices/$base.tgz" "$dir"
+            tar -czf "tgz_files/$base.tgz" "$dir"
           done
 
       - name: Debug - List Contents of KubeServices Directory
@@ -43,27 +43,12 @@ jobs:
         run: ls KubeServices/gamekube-factorio
 
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: false
-
-      # Loop through each .tgz file and upload it as a release asset
-      - name: Loop through .tgz files and upload as release assets
+      # Add the .tgz files to the repository
+      - name: Add .tgz files to the repository
         run: |
-          for file in KubeServices/*.tgz; do
-            echo "Uploading $file"
-            curl -s -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: application/octet-stream" \
-              --data-binary "@$file" \
-              "${{ steps.create_release.outputs.upload_url }}/assets?name=$(basename "$file")"
-            echo "Uploaded $file"
-          done
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add tgz_files/
+          git commit -m "Add .tgz files"
+          git push
 
