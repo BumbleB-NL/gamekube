@@ -11,8 +11,9 @@ Enterprise grade gameserver deployment on self hosted Kubernetes
 The project consists of multiple components:
 - MetalLB loadbalancer for providing access to the services.
 - NFS CSI provisioner for dynamically creating PV's on a NFS server when they are needed.
-- Deployments for multiple gameservers including factorio and minecraft servers.
-- Options for configuring installations using configmaps and secretmaps.
+- Deployments for multiple gameservers including factorio and minecraft servers using charts.
+- Github Actions workflow for automating chart release to folder for usage with Gotohelm.
+- Gotohelm custom application for launching helm charts using API calls.
 
 ![Functional](Designs/GameKubeFunctionalDesignV3.drawio.png)
 
