@@ -37,3 +37,5 @@ spec:
             items:
             - key: kubeconfig
               path: config
+            - key: kubeservices
+              path: kubeservices
