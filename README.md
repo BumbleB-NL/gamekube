@@ -15,7 +15,7 @@ The project consists of multiple components:
 - Github Actions workflow for automating chart release to folder for usage with Gotohelm.
 - Gotohelm custom application for launching helm charts using API calls.
 
-![Functional](Designs/GameKubeFunctionalDesignV3.drawio.png)
+![Functional](Designs/GameKubeFunctionalDesignV4.drawio.png)
 
 Network design:
 
