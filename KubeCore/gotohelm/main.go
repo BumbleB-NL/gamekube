@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -12,14 +13,19 @@ import (
 )
 
 var (
-	namespace = "sjaakie"
+	namespace = "test"
 )
 
 func main() {
+	installHelmChart()
+}
+
+func installHelmChart() {
 	settings := cli.New()
-	settings.KubeConfig = "/kubeconfig/config"
+	settings.KubeConfig = "/mnt/kubeconfig/config"
 	settings.KubeContext = "p1-k1-cluster"
 	settings.SetNamespace(namespace)
+	settings.KubeInsecureSkipTLSVerify = true
 
 	actionConfig := new(action.Configuration)
 	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), log.Printf); err != nil {
@@ -31,6 +37,7 @@ func main() {
 	client.ReleaseName = "gotohelm-" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10)
 	client.Namespace = namespace
 	client.CreateNamespace = true
+	client.InsecureSkipTLSverify = true
 	// client.Version = "1.2.5"
 
 	chrt_path, err := client.LocateChart("https://raw.githubusercontent.com/BumbleB-NL/gamekube/main/tgz_files/gamekube-dvwa.tgz", settings)
@@ -49,4 +56,9 @@ func main() {
 	}
 
 	log.Println(releaseSjaak)
+
+	for {
+		fmt.Println("Waiting...")
+		time.Sleep(1 * time.Minute)
+	}
 }

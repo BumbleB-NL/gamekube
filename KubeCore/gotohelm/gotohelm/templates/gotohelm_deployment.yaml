@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: bumblebnl/gotohelm:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.cpu_limit }}
+              memory: {{ .Values.memory_limit }}
+            requests: 
+              cpu: {{ .Values.cpu_requests }}
+              memory: {{ .Values.memory_requests }}
+          volumeMounts:
+          - name: config
+            mountPath: /mnt/kubeconfig
+            readOnly: false
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}
+            items:
+            - key: kubeconfig
+              path: config
