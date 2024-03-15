@@ -84,3 +84,4 @@ Services can now be create using the `type: LoadBalancer` parameters and will be
 - [ ] Allow console access to gameserver for users.
 - [ ] Allow access to server configs for users.
 - [ ] Allow access to server save files for users.
+- [ ] Make API return required information.
