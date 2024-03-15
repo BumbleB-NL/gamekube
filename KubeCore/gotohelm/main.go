@@ -33,7 +33,7 @@ func main() {
 	client.CreateNamespace = true
 	// client.Version = "1.2.5"
 
-	chrt_path, err := client.LocateChart("https://charts.bitnami.com/bitnami/nginx-15.14.0.tgz", settings)
+	chrt_path, err := client.LocateChart("https://raw.githubusercontent.com/BumbleB-NL/gamekube/main/tgz_files/gamekube-dvwa.tgz", settings)
 	if err != nil {
 		panic(err)
 	}
