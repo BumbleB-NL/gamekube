@@ -144,7 +144,8 @@ spec:
 ```
 Note that we again use `{{ .Release.Name }}` as the `metadata.name` for the same reasons as mentioned earlier. We also choose loadbalancer, this will assign a unique internal ip-address to the services using the metalLB loadbalancer we installed at the start. 
 
-At this point we could manually apply the service, pvc and deployment by
+At this point we could manually apply the service, pvc and deployment by running `kubectl apply -f <folder-containing-yaml-files>` if we had manually set all the options instead of using templates (such as `{{ .Release.Name }}`). To make deployment easier we will create a helm chart that will create these resources for us.
+
 ### Helm chart
 To move the kubernetes components to a chart start by creating a helm chart directory on a device where helm is installed:
 
