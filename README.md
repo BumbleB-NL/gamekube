@@ -191,7 +191,33 @@ To deploy the chart we can run:
 We use `--generate-name` to make every install unique, allowing us to install the same service multiple times. After running helm install helm should have installed all kubernetes resources on the cluster.
 
 ## Github actions workflow
-Because our goal is to deploy our earlier created helm charts using the Golang helm SDK we will need to be able to access our charts in a `.tgz` format. These archives can be created automatically in github using github actions. The action will archive the individual chart folders whenever a new push is made to the `Kubeservices` folder. The workflow file can be found in this repository at `.github/workflows/releasechart.yml`.
+Because our goal is to deploy our earlier created helm charts using the Golang helm SDK we will need to be able to access our charts in a `.tgz` format. These archives can be created automatically in github using github actions. The action will archive the individual chart folders whenever a new push is made to the `Kubeservices` folder. The workflow file can be found in this repository at `.github/workflows/releasechart.yml`. The archives will be placed in the `tgz_files` folder.
+
+## Gotohelm application
+This application will be used to start a helm app using the helm SDk for Golang and create/manage Zerotier networks that provide access to the gameserver for the players using `https://github.com/PimSanders/golang-zerotier-api` functions.
+
+First create a configmap that contains your kubectl config file and a key-value pair list with chartnames and their urls:
+```
+
+```
+
+This can be installed using a helm chart.
+
+`cd KubeCore/`
+
+`helm install ./gotohelm`
+
+### API Calls
+Currently the following API calls are working:
+
+Install new server (Options for `serverservice` can found and customized in the configmap.
+```
+POST /newserver
+{
+  "userId": "sjaakie",
+  "serverservice": "factorio"
+}
+```
 
 # ToDo
 
@@ -203,7 +229,7 @@ Because our goal is to deploy our earlier created helm charts using the Golang h
 - [ ] Gotohelm proper error handling in API.
 - [ ] Ability for users to add players to their VPN network.
 - [ ] Autoinstaller for VPN.
-- [ ] Add network bridge/VPN exit node.
+- [ ] Add network bridge/VPN exit node to network.
 - [ ] Different Ip-address pools for metallb (production, test, client servers).
 - [ ] Version control on deployable services with the option of choosing server version.
 - [ ] Update option for users services.
