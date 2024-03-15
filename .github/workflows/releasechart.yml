@@ -26,7 +26,8 @@ jobs:
 
       - name: Create TGZ files
         run: |
-          for dir in KubeServices/*; do
+          cd KubeServices
+          for dir in ./*; do
             echo "Tarring directory: $dir"
             base=$(basename "$dir")
             echo "Base directory: $base"
