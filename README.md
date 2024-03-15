@@ -4,14 +4,14 @@ Enterprise grade gameserver deployment on self hosted Kubernetes
 # Prerequisites
 - Basic knowledge about Kubernetes deployments, services and PV's/PVC's.
 - Basic installation of Kubernetes Cluster (using rancher) [tested on a 7 node cluster, 3 control-plane & etcd nodes, 4 worker nodes]. Make sure to not install ingress nginx as we will be using metallb instead.
-- Helm installed.
+- Helm installed on a machine with access to the cluster.
 - Preconfigured NFS server that can be accessed by the cluster.
 
 # Components
 The project consists of multiple components:
 - MetalLB loadbalancer for providing access to the services.
 - NFS CSI provisioner for dynamically creating PV's on a NFS server when they are needed.
-- Deployments for multiple gameservers including factorio and minecraft servers using charts.
+- Deployments for multiple gameservers including factorio and minecraft servers using helm charts.
 - Github Actions workflow for automating chart release to folder for usage with Gotohelm.
 - Gotohelm custom application for launching helm charts using API calls.
 
@@ -66,6 +66,51 @@ To install the loadbalancer:
 Next create or edit the ip-address range in the configmap `KubeCore/metallb/metallb-configmap.yaml`, then apply using `kubectl apply -f KubeCore/metallb/metallb-configmap.yaml`. The addresses should be contained in your local subnet and not be in use.
 
 Services can now be create using the `type: LoadBalancer` parameters and will be assigned an ip-address from the specified range.
+
+## Gameserver deployments using helm charts
+### Helm chart
+To move the kubernetes components to a chart start by creating a helm chart directory on a device where helm is installed:
+
+`helm create <name>`
+
+Cd into the created folder, next open values.yaml and delete its contents, also delete the contents of the templates folder.
+
+Now copy the kubernetes service, deployment and pvc manifests into the templates folder.
+
+Using helm the manifests can be deployed using different parameters. By adding key value pairs to the values.yaml file deployment options can be set for each deployment:
+
+```
+cpu_limit: 2
+cpu_requests: 1
+memory_limit: 1Gi
+memory_requests: 0.5Gi
+storage_size: 1Gi
+```
+
+These values can then be reference in the kubernetes manifest files as follows:
+
+```
+containers:
+  - name: {{ .Release.Name }}
+    image: factoriotools/factorio
+    ports:
+    - containerPort: 34197
+      protocol: UDP
+    resources:
+      limits:
+        cpu: {{ .Values.cpu_limit }}
+        memory: {{ .Values.memory_limit }}
+      requests: 
+        cpu: {{ .Values.cpu_requests }}
+        memory: {{ .Values.memory_requests }
+```
+When deploying the helm chart these values will be applied to the manifests, Values starting with `.Values` will be taken from the values.yaml file. `.Release` is a builtin feature in helm, in this case we use this to set the name of the kubernetes resources which will connect them together.
+
+To deploy the chart we can run:
+
+`helm install --generate-name <path-to-helm-folder>`
+
+We use `--generate-name` to make every install unique, allowing us to install the same service multiple times. After running helm install helm should have installed all kubernetes resources on the cluster.
 
 # ToDo
 
