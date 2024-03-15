@@ -190,6 +190,9 @@ To deploy the chart we can run:
 
 We use `--generate-name` to make every install unique, allowing us to install the same service multiple times. After running helm install helm should have installed all kubernetes resources on the cluster.
 
+## Github actions workflow
+Because our goal is to deploy our earlier created helm charts using the Golang helm SDK we will need to be able to access our charts in a `.tgz` format. These archives can be created automatically in github using github actions. The action will archive the individual chart folders whenever a new push is made to the `Kubeservices` folder. The workflow file can be found in this repository at `.github/workflows/releasechart.yml`.
+
 # ToDo
 
 - [ ] Userfriendly portal.
