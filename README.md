@@ -68,7 +68,19 @@ Services can now be create using the `type: LoadBalancer` parameters and will be
 
 # ToDo
 
-- [ ] Userfriendly portal
-- [ ] Container/pod isolation
-- [ ] Deploy multiple of the same server within a users namespace without manually changing deployments.
+- [ ] Userfriendly portal.
+- [ ] Container/pod isolation for cluster.
+- [x] Deploy multiple of the same server within a users namespace without manually changing deployments.
 - [ ] Configureable options like CPU, memory, and storage for users.
+- [ ] Gotohelm API functions for deleting services/players etc.
+- [ ] Gotohelm proper error handling in API.
+- [ ] Ability for users to add players to their VPN network.
+- [ ] Autoinstaller for VPN.
+- [ ] Add network bridge/VPN exit node.
+- [ ] Different Ip-address pools for metallb (production, test, client servers).
+- [ ] Version control on deployable services with the option of choosing server version.
+- [ ] Update option for users services.
+- [ ] Backup option for user services.
+- [ ] Allow console access to gameserver for users.
+- [ ] Allow access to server configs for users.
+- [ ] Allow access to server save files for users.
