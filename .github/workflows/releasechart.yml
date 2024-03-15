@@ -31,6 +31,10 @@ jobs:
             tar -czf "$base.tgz" "$dir"
           done
 
+      - name: Debug - List Contents of KubeServices Directory
+        run: ls KubeServices/
+
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
