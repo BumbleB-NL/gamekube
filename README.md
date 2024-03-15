@@ -265,5 +265,6 @@ POST /newserver
 - [ ] Backup option for user services.
 - [ ] Allow console access to gameserver for users.
 - [ ] Allow access to server configs for users.
+- [ ] Add comments to Gotohelm program.
 - [ ] Allow access to server save files for users.
 - [ ] Make API return required information.
