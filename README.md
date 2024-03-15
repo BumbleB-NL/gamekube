@@ -68,6 +68,83 @@ Next create or edit the ip-address range in the configmap `KubeCore/metallb/meta
 Services can now be create using the `type: LoadBalancer` parameters and will be assigned an ip-address from the specified range.
 
 ## Gameserver deployments using helm charts
+### Deployments
+We start by creating a deployment, this will allow us to configure and run containers/pods on the cluster from a preconfigured file. In this deployment file we have already configure templates like `{{ .Release.Name }}` which will later be used by helm. Example deployment file:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: factoriotools/factorio
+          ports:
+            - containerPort: 34197
+              protocol: UDP
+          resources:
+            limits:
+              cpu: {{ .Values.cpu_limit }}
+              memory: {{ .Values.memory_limit }}
+            requests: 
+              cpu: {{ .Values.cpu_requests }}
+              memory: {{ .Values.memory_requests }}
+          volumeMounts:
+            - mountPath: "/factorio"
+              name: factorio-volume
+      volumes:
+        - name: factorio-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+```
+### Persistent volume claims
+To keep the servers data persistent even when the pods crashes we configure a volume much like in docker, however in kubernetes this also requires us to create a Persistent Volume Claim (PVC). This can also be configured in a pvc.yaml file:
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage_size }}
+  storageClassName: nfs-storage
+```
+Note that in this PVC we reference the storage class we created earlier. Also note that the `metadata.name` used here should be the same as the name used earlier in the deployment. We just use `{{ .Release.Name }}` and let helm take care of it. This will insure that the name will be the same.
+
+### Services
+With the deployment and PVC configured we still need a way to access our containers. This will be done using a service.yaml file:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - protocol: UDP
+      port: 34197
+      targetPort: 34197
+  type: LoadBalancer
+```
+Note that we again use `{{ .Release.Name }}` as the `metadata.name` for the same reasons as mentioned earlier. We also choose loadbalancer, this will assign a unique internal ip-address to the services using the metalLB loadbalancer we installed at the start. 
+
+At this point we could manually apply the service, pvc and deployment by
 ### Helm chart
 To move the kubernetes components to a chart start by creating a helm chart directory on a device where helm is installed:
 
