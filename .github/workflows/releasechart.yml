@@ -36,6 +36,11 @@ jobs:
       - name: Debug - List Contents of KubeServices Directory
         run: ls KubeServices/
 
+      - name: Debug - List Contents of KubeServices Directory
+        run: ls ./
+
+      - name: Debug - List Contents of KubeServices Directory
+        run: ls KubeServices/gamekube-factorio
 
       - name: Create Release
         id: create_release
