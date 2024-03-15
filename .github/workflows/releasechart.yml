@@ -52,6 +52,7 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
+          
       - name: Upload TGZ files to Release
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -59,15 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: KubeServices/gamekube-factorio.tgz
+          asset_name: ${{ github.run_number }}.tgz
+          asset_content_type: application/x-compressed
 
-      # Loop through each .tgz file and upload it as a release asset
-      - name: Loop through .tgz files
-        run: |
-          for file in KubeServices/*.tgz; do
-            echo "Uploading $file"
-            curl -s -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: application/octet-stream" \
-              --data-binary "@$file" \
-              "${{ steps.upload-release-asset.outputs.upload_url }}?name=$(basename "$file")"
-          done
