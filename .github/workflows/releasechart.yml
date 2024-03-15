@@ -31,7 +31,7 @@ jobs:
             echo "Tarring directory: $dir"
             base=$(basename "$dir")
             echo "Base directory: $base"
-            tar -czf "tgz_files/$base.tgz" "$dir"
+            tar -czf "../tgz_files/$base.tgz" "$dir"
           done
       - name: Debug - List Contents of KubeServices Directory
         run: ls KubeServices/
