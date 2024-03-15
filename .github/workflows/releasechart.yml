@@ -30,9 +30,10 @@ jobs:
             echo "Tarring directory: $dir"
             base=$(basename "$dir")
             echo "Base directory: $base"
-            tar -czf "tgz_files/$base.tgz" "$dir"
+            cd "$dir"
+            tar -czf "../tgz_files/$base.tgz" "$dir"
+            cd -
           done
-
       - name: Debug - List Contents of KubeServices Directory
         run: ls KubeServices/
 
@@ -41,17 +42,13 @@ jobs:
 
       - name: Debug - List Contents of KubeServices Directory
         run: ls KubeServices/gamekube-factorio
-        
-      - name: Create TGZ files
+
+
+      # Add the .tgz files to the repository
+      - name: Add .tgz files to the repository
         run: |
-          for dir in KubeServices/*; do
-            echo "Tarring directory: $dir"
-            base=$(basename "$dir")
-            echo "Base directory: $base"
-            # Change working directory to the directory being archived
-            cd "$dir"
-            # Create .tgz file without including the top-level directory
-            tar -czf "../tgz_files/$base.tgz" .
-            # Return to the previous directory
-            cd -
-          done
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add tgz_files/
+          git commit -m "Add .tgz files"
+          git push
