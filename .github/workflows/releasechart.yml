@@ -27,8 +27,8 @@ jobs:
       - name: Create TGZ files
         run: |
           for dir in KubeServices/*; do
-            base=$(basename "$dir")
-            tar -czf "$base.tgz" "$dir"
+            base=$(basename "KubeServices/$dir")
+            tar -czf "$base.tgz" "KubeServices/$dir"
           done
 
       - name: Create Release
