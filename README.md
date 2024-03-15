@@ -198,7 +198,36 @@ This application will be used to start a helm app using the helm SDk for Golang 
 
 First create a configmap that contains your kubectl config file and a key-value pair list with chartnames and their urls:
 ```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
 
+  kubeconfig: |
+    apiVersion: v1
+    kind: Config
+    clusters:
+    - name: "p1-k1-cluster"
+      cluster:
+        server: "serverendpoint"
+        certificate-authority-data: "certificatestuff"
+    users:
+    - name: "p1-k1-cluster"
+      user:
+        token: "sometoken"
+    contexts:
+    - name: "p1-k1-cluster"
+      context:
+        user: "p1-k1-cluster"
+        cluster: "p1-k1-cluster"
+    current-context: "p1-k1-cluster"
+
+  kubeservices: |
+    factorio: https://raw.githubusercontent.com/BumbleB-NL/gamekube/main/tgz_files/gamekube-factorio.tgz
+    minecraft: https://raw.githubusercontent.com/BumbleB-NL/gamekube/main/tgz_files/gamekube-minecraft.tgz
+    dvwa: https://raw.githubusercontent.com/BumbleB-NL/gamekube/main/tgz_files/gamekube-dvwa.tgz
+  
 ```
 
 This can be installed using a helm chart.
